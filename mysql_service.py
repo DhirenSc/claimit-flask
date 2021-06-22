@@ -8,24 +8,23 @@ import json
 def connect():
     return mysql.connector.connect(
       host="localhost",
-      user="# USERNAME",
-      passwd="# PASSWORD",
-      database="# DATABASE"
+      user="",
+      passwd="",
+      database=""
     )
 
-# post new report data
+# post new claim
 def post_claim_data(data):
     db = connect()
     cursor = db.cursor()
     sql = "INSERT INTO __claims__ (claim_id, imageURL, severity, userId, status, make, model, vehicle_year, phone_no, created_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    val = (data["claimId"], data["imageUrls"], data["severity"], data["userId"], data["status"], data["make"], data["model"], data["year"], data["phoneNo"], datetime.utcnow())
+    val = (data["claimId"], str(data["imageUrls"]), data["severity"], data["userId"], data["status"], data["make"], data["model"], data["year"], data["phoneNo"], datetime.utcnow())
     cursor.execute(sql, val)
     db.commit()
     return str(cursor.rowcount) + " record inserted."
 
-# get reports data for a user
+# get claims for a user
 def get_user_claims_data(data):
-    data = json.loads(data)
     db = connect()
     cursor = db.cursor()
 

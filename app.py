@@ -18,8 +18,8 @@ app = Flask(__name__)
 # at the backend.
 @app.route('/api/detect/multiple', methods=['POST'])
 def detect_damage_in_multiple_image():
-    data = json.loads(request.get_json(silent=True))
-    claim_id = data['claimId']
+    data = request.get_json(silent=True)
+    claim_id = data['claim_id']
     return multiple_image_detection_results(claim_id)
 
 # upload files using this route.
@@ -42,7 +42,7 @@ def upload_files():
     
     final_url = utility.IMG_UPLOADS_DISPLAY_URL+str(session_id)+'/'
     return dumps({
-        'claimId': str(session_id),
+        'claim_id': str(session_id),
         'filename': [final_url + f for f in file_names]}
     )
 
@@ -73,14 +73,15 @@ def post_user_profile():
 # submit a new claim
 @app.route('/api/submit/claim', methods=['POST'])
 def submit_claim():
-    data = json.loads(request.get_json(silent=True))
+    data = request.get_json(silent=True)
+    print(data)
     return post_claim_data(data)
 
 # get user claims
 @app.route('/api/claims', methods=['POST'])
 def get_user_claims():
     print(request.get_json())
-    data = request.get_json(silent=True)
+    data = json.loads(request.get_json(silent=True))
     return get_user_claims_data(data)
 
 if __name__ == '__main__':

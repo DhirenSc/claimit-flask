@@ -4,6 +4,12 @@ import sys
 import utility
 import os
 from json import dumps
+import random
+
+def random_color():
+    rgbl=[255,0,0]
+    random.shuffle(rgbl)
+    return tuple(rgbl)
 
 def multiple_image_detection_results(claim_id):
     image_directory = utility.IMG_UPLOADS_DIRECTORY+"/"+claim_id+"/"
@@ -50,14 +56,14 @@ def multiple_image_detection_results(claim_id):
                                                 item[utility.LABEL_TOP_LEFT][utility.LABEL_Y]),
                                     (item[utility.LABEL_BOTTOM_RIGHT][utility.LABEL_X],
                                     item[utility.LABEL_BOTTOM_RIGHT][utility.LABEL_Y]),
-                                    (0, 255, 0), 4)
+                                    random_color(), 4)
 
             # add text output label
             text_x, text_y = item[utility.LABEL_TOP_LEFT][utility.LABEL_X] - utility.BOX_OFFSET, \
                             item[utility.LABEL_TOP_LEFT][utility.LABEL_Y] - utility.BOX_OFFSET
 
             image_cv = cv2.putText(image_cv, item[utility.LABEL], (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.8,
-                                (0, 255, 0), 2,
+                                random_color(), 2,
                                 cv2.LINE_AA)
             unique_labels.add(item[utility.LABEL])
 
