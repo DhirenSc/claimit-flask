@@ -35,9 +35,8 @@ pip install opencv-python
 pip install cython
 ```
 
-5. We clone the darkflow repository next
+5. We go into the darkflow repository next and install it globally
 ```
-git clone https://github.com/thtrieu/darkflow
 cd darkflow
 python3 setup.py build_ext --inplace
 pip install .
